@@ -12,7 +12,6 @@ Designed with a high-fidelity pure black & monochrome theme (`#000000`, `#141414
 | :--- | :--- |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>0</kbd> | **Run & Show Program 10** (Views) directly in the terminal |
 | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>1</kbd> .. <kbd>9</kbd> | Run & Show preloaded Programs 1 to 9 in the terminal |
-| Click <kbd>P1</kbd> .. <kbd>P10</kbd> | Click any button in the title bar to run and show that program |
 | Type `10` or `1` .. `9` | Type program number at `SQL> ` prompt to run it instantly |
 | <kbd>Ctrl</kbd> + <kbd>0</kbd> (or <kbd>1</kbd>..<kbd>9</kbd>) | Opens the overlay modal showing **AIM** and **ALGORITHM** for Program 10 (or 1..9) |
 | <kbd>Ctrl</kbd> + <kbd>Space</kbd> | **Stealth Mode** — Instantly blacks out the screen with cursor hidden (toggle back anytime) |

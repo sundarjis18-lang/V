@@ -1056,7 +1056,6 @@ function processSQLStatement(statement) {
 --------------------------------------------------------------------------------
 Ctrl + 1 to 10        : Open Aim & Algorithm for Lab Program 1..10 (Ctrl+0 for Prog 10)
 Ctrl + Shift + 1 to 10: Run preloaded Lab Program 1..10 (Ctrl+Shift+0 for Prog 10)
-Title Bar P1..P10     : Click any program button in the top bar to run instantly
 Type 1..10 / P10      : Type number at SQL> prompt to execute that program
 Ctrl + Space          : Stealth Mode (Blank screen)
 Ctrl + X / Esc        : Close open dialog box
@@ -1455,28 +1454,8 @@ function executeProgramBatch(programId) {
 }
 
 /* -------------------------------------------------------------
-   WINDOW CONTROL & TITLE BAR PROGRAM BUTTONS
+   WINDOW CONTROL BUTTONS
    ------------------------------------------------------------- */
-document.querySelectorAll(".prog-btn").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const id = parseInt(btn.getAttribute("data-id"), 10);
-    if (id >= 1 && id <= 10) {
-      safeExecuteProgramBatch(id);
-    }
-  });
-
-  btn.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const id = parseInt(btn.getAttribute("data-id"), 10);
-    if (id >= 1 && id <= 10) {
-      openProgramModal(id);
-    }
-  });
-});
-
 document.getElementById("btn-minimize").addEventListener("click", () => {
   toggleStealthMode();
 });

@@ -96,44 +96,6 @@ html, body {
   margin-left: 6px;
 }
 
-.title-programs {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: auto;
-  margin-right: 12px;
-}
-
-.prog-btn {
-  background: #1c1c1c;
-  border: 1px solid #333333;
-  color: #999999;
-  font-family: var(--font-stack);
-  font-size: 11px;
-  padding: 2px 7px;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  user-select: none;
-}
-
-.prog-btn:hover {
-  background: #2e2e2e;
-  border-color: #555555;
-  color: #ffffff;
-}
-
-.prog-btn:active {
-  background: #3f3f3f;
-  color: #ffffff;
-}
-
-.prog-btn.highlight {
-  border-color: #4a4a4a;
-  color: #d0d0d0;
-  font-weight: bold;
-}
-
 .title-controls {
   display: flex;
   height: 100%;
