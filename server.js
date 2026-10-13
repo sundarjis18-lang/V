@@ -10,7 +10,8 @@ const MIME = {
 };
 
 const server = http.createServer((req, res) => {
-  let file = req.url === '/' ? '/index.html' : req.url;
+  let file = req.url.split('?')[0];
+  file = file === '/' ? '/index.html' : file;
   const filePath = path.join(__dirname, file);
 
   fs.readFile(filePath, (err, data) => {
@@ -19,7 +20,10 @@ const server = http.createServer((req, res) => {
       return res.end('Not Found');
     }
     const ext = path.extname(filePath);
-    res.writeHead(200, { 'Content-Type': MIME[ext] || 'text/plain' });
+    res.writeHead(200, {
+      'Content-Type': MIME[ext] || 'text/plain',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
+    });
     res.end(data);
   });
 });

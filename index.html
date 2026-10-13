@@ -2,11 +2,81 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Blank Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL*Plus: Release 19.0.0.0.0 - Oracle Database 19c</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23222222' rx='3'/%3E%3Cpath d='M8 9h16v3H8zm0 5h16v3H8zm0 5h16v3H8z' fill='%23cccccc'/%3E%3Ctext x='16' y='27' font-family='monospace' font-size='8' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3ESQL%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <pre id="output"></pre>
+
+  <!-- Fullscreen OS Window -->
+  <div id="window-container">
+    
+    <!-- Title Bar -->
+    <div id="title-bar">
+      <div class="title-left">
+        <div class="sqlplus-icon" title="SQL*Plus">SQL</div>
+        <div class="title-text">
+          SQL*Plus
+          <span class="version-tag">Release 19.0.0.0.0</span>
+        </div>
+      </div>
+      <div class="title-programs" id="title-programs">
+        <button class="prog-btn" data-id="1" title="Program 1: DDL & DML (Ctrl+Shift+1)">P1</button>
+        <button class="prog-btn" data-id="2" title="Program 2: TCL (Ctrl+Shift+2)">P2</button>
+        <button class="prog-btn" data-id="3" title="Program 3: Logical Operators (Ctrl+Shift+3)">P3</button>
+        <button class="prog-btn" data-id="4" title="Program 4: Group By & Subqueries (Ctrl+Shift+4)">P4</button>
+        <button class="prog-btn" data-id="5" title="Program 5: Set Operations (Ctrl+Shift+5)">P5</button>
+        <button class="prog-btn" data-id="6" title="Program 6: Built-in Functions (Ctrl+Shift+6)">P6</button>
+        <button class="prog-btn" data-id="7" title="Program 7: Rollback & Savepoint (Ctrl+Shift+7)">P7</button>
+        <button class="prog-btn" data-id="8" title="Program 8: Joins (Ctrl+Shift+8)">P8</button>
+        <button class="prog-btn" data-id="9" title="Program 9: Triggers (Ctrl+Shift+9)">P9</button>
+        <button class="prog-btn highlight" data-id="10" title="Program 10: Views (Ctrl+Shift+0)">P10</button>
+      </div>
+      <div class="title-controls">
+        <button class="win-btn" id="btn-minimize" title="Minimize / Blank Screen">─</button>
+        <button class="win-btn" id="btn-maximize" title="Maximize (Fullscreen)">□</button>
+        <button class="win-btn close-btn" id="btn-close" title="Exit">✕</button>
+      </div>
+    </div>
+
+    <!-- Terminal Output & Interactive Area -->
+    <div id="terminal">
+      <div id="terminal-history"></div>
+      
+      <!-- Live Command Prompt -->
+      <div id="active-prompt-row">
+        <span class="prompt-label" id="prompt-label">SQL&gt; </span>
+        <span id="rendered-input"></span><span class="cursor-block"></span>
+        <input type="text" id="command-input" autocomplete="off" spellcheck="false" autofocus />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Terminal-Native Overlay Dialog (Ctrl + 1..10) -->
+  <div id="terminal-modal-overlay">
+    <div class="terminal-modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-program-title">PROGRAM 01</div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-title">AIM</div>
+          <div class="modal-aim" id="modal-aim-text"></div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">ALGORITHM</div>
+          <ul class="modal-algo-list" id="modal-algo-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stealth Blackout Overlay (Ctrl + Space) -->
+  <div id="stealth-overlay"></div>
+
+  <!-- JavaScript Engine -->
   <script src="script.js"></script>
 </body>
 </html>

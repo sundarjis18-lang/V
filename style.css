@@ -1,16 +1,384 @@
-body {
+/* -------------------------------------------------------------
+   NATIVE ORACLE SQL*PLUS MONOCHROME TERMINAL REPLICA
+   Theme: Pure Black and Grey
+   ------------------------------------------------------------- */
+:root {
+  --bg-color: #000000;
+  --terminal-bg: #000000;
+  --titlebar-bg: #141414;
+  --titlebar-border: #262626;
+  --titlebar-text: #b0b0b0;
+  --text-color: #cccccc;
+  --text-bright: #ffffff;
+  --text-dim: #777777;
+  --border-grey: #333333;
+  --modal-bg: #050505;
+  --modal-border: #444444;
+  --font-stack: "Consolas", "Courier New", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding: 30px;
-  background-color: #ffffff;
-  color: #000000;
-  font-family: Consolas, monospace;
-  font-size: 16px;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-stack);
+  font-size: 15px;
+  line-height: 1.35;
+  overflow: hidden;
+  user-select: text;
+}
+
+/* Fullscreen Window Container */
+#window-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background: var(--terminal-bg);
+  position: relative;
+}
+
+/* Title Bar */
+#title-bar {
+  height: 32px;
+  min-height: 32px;
+  background: var(--titlebar-bg);
+  border-bottom: 1px solid var(--titlebar-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  user-select: none;
+  z-index: 100;
+}
+
+.title-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.sqlplus-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2b2b2b;
+  border: 1px solid #444444;
+  border-radius: 2px;
+  color: #e0e0e0;
+  font-weight: bold;
+  font-size: 9.5px;
+  letter-spacing: -0.5px;
+}
+
+.title-text {
+  color: var(--titlebar-text);
+  font-size: 12.5px;
+  font-weight: normal;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.title-text .version-tag {
+  color: #666666;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.title-programs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  margin-right: 12px;
+}
+
+.prog-btn {
+  background: #1c1c1c;
+  border: 1px solid #333333;
+  color: #999999;
+  font-family: var(--font-stack);
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.prog-btn:hover {
+  background: #2e2e2e;
+  border-color: #555555;
+  color: #ffffff;
+}
+
+.prog-btn:active {
+  background: #3f3f3f;
+  color: #ffffff;
+}
+
+.prog-btn.highlight {
+  border-color: #4a4a4a;
+  color: #d0d0d0;
+  font-weight: bold;
+}
+
+.title-controls {
+  display: flex;
+  height: 100%;
+}
+
+.win-btn {
+  width: 44px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: #aaaaaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--font-stack);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.win-btn:hover {
+  background: #2a2a2a;
+  color: #ffffff;
+}
+
+.win-btn.close-btn:hover {
+  background: #3a3a3a;
+  color: #ffffff;
+}
+
+/* Terminal Workspace (Fills entire screen below title bar) */
+#terminal {
+  flex: 1;
+  padding: 12px 16px 12px 16px;
+  overflow-y: auto;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-variant-ligatures: none;
+  cursor: text;
+  position: relative;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+#terminal-history {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+/* Scrollbar */
+#terminal::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+#terminal::-webkit-scrollbar-track {
+  background: #000000;
+}
+#terminal::-webkit-scrollbar-thumb {
+  background: #222222;
+  border: 1px solid #111111;
+}
+#terminal::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+.output-line {
+  margin: 0;
+  padding: 0;
+  line-height: 1.35;
+  color: var(--text-color);
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+.output-line.prompt-echo {
+  color: var(--text-bright);
+}
+
+.output-line.system-banner {
+  color: var(--text-color);
+}
+
+.output-line.table-grid {
+  color: #dcdcdc;
+}
+
+.output-line.error-msg {
+  color: #999999;
+}
+
+/* Active Prompt Line */
+#active-prompt-row {
+  display: flex;
+  align-items: center;
+  min-height: 20px;
+  margin-top: 2px;
+  position: relative;
+}
+
+.prompt-label {
+  color: var(--text-bright);
+  font-weight: normal;
+  user-select: none;
+  margin-right: 0px;
+  white-space: pre;
+}
+
+#command-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: default;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  z-index: 10;
+}
+
+#rendered-input {
+  display: inline-block;
+  color: var(--text-bright);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Blinking Block Cursor */
+.cursor-block {
+  display: inline-block;
+  width: 8.5px;
+  height: 16px;
+  background-color: var(--text-bright);
+  vertical-align: middle;
+  margin-left: 1px;
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Terminal-Native Overlay Dialog (Aim & Algorithm Only) */
+#terminal-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 32px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#terminal-modal-overlay.active {
+  display: flex;
+}
+
+.terminal-modal {
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
+  width: 800px;
+  max-width: 95vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-color);
+  font-family: var(--font-stack);
+  position: relative;
+}
+
+.modal-header {
+  background: #111111;
+  border-bottom: 1px solid #282828;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.modal-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  flex: 1;
+  font-size: 13.5px;
   line-height: 1.5;
 }
 
-pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: inherit;
+.modal-section {
+  margin-bottom: 16px;
+}
+
+.modal-section-title {
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.modal-aim {
+  color: #cccccc;
+  padding-left: 12px;
+  border-left: 2px solid #333333;
+  margin-bottom: 8px;
+}
+
+.modal-algo-list {
+  list-style-type: none;
+  padding-left: 12px;
+  border-left: 2px solid #333333;
+}
+
+.modal-algo-list li {
+  margin-bottom: 4px;
+  color: #b0b0b0;
+}
+
+/* Stealth Screen (Complete Blank Screen) */
+#stealth-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000000 !important;
+  z-index: 9999999;
+  cursor: none;
+  user-select: none;
+}
+
+#stealth-overlay.active {
+  display: block;
 }
